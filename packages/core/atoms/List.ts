@@ -1,25 +1,26 @@
-import { Atom, ListItem } from "..";
+import { Atom } from "./Atom";
+import { ListItem } from "./ListItem";
 
 export class List extends Atom {
     private items = new Array<ListItem>();
 
-    getItems(){
+    getItems() {
         return this.items;
     }
 
-    setItems(items: ListItem[]){
+    setItems(items: ListItem[]) {
         this.items = items;
         this.detectChanges();
         return this;
     }
 
-    addItem(item: ListItem){
+    addItem(item: ListItem) {
         this.items.push(item);
         this.detectChanges();
         return this;
     }
 
-    removeItem(item: ListItem){
+    removeItem(item: ListItem) {
         this.items = this.items.filter(i => i !== item);
         this.detectChanges();
         return this;

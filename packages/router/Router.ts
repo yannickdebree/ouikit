@@ -9,15 +9,16 @@ export class Router extends Atom {
         this.activeRoute = Object.keys(this.config.routes)[0];
     }
 
+    getActiveRoute() {
+        return this.activeRoute;
+    }
+
     navigate(route: string) {
-        if (this.activeRoute === route) {
-            return;
+        if (this.activeRoute !== route) {
+            this.activeRoute = route;
+            this.detectChanges();
         }
-        if (!Object.keys(this.config.routes).includes(route)) {
-            throw new Error(`"${route} is not defined as route in your router.`);
-        }
-        this.activeRoute = route;
-        this.detectChanges();
+        return this;
     }
 
     getActiveRouteController() {
