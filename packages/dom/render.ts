@@ -1,16 +1,16 @@
 import { Atom } from "@ouikit/core";
 import { Octopus } from "@ouikit/core/themes";
-import { currentTheme, useTheme } from "./useTheme";
-import { createElement } from "./create";
+import { createElement } from "./createElement";
 import { onUpdate } from "./update";
+import { currentTheme, useTheme } from "./useTheme";
 
 let firstRendering = true;
 
 export function render(root: Element | null, ...atoms: Array<Atom>) {
     if (firstRendering) {
         firstRendering = false;
-        
-        if(!currentTheme){
+
+        if (!currentTheme) {
             useTheme(Octopus);
         }
     }
@@ -21,6 +21,7 @@ export function render(root: Element | null, ...atoms: Array<Atom>) {
 
     atoms.forEach(atom => {
         const element = createElement(atom);
+        onUpdate(atom, element);
 
         root.appendChild(element);
 

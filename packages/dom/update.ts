@@ -27,7 +27,11 @@ export function onUpdate(atom: Atom, element: HTMLElement) {
             }
         };
 
-        atom.getActiveRouteController()(options);
+        const activeRouterController = atom.getActiveRouterController()
+
+        if (!!activeRouterController) {
+            activeRouterController(options);
+        }
     } if (atom instanceof Box) {
         element.classList.add('box')
     } if (atom instanceof Container) {
@@ -35,6 +39,6 @@ export function onUpdate(atom: Atom, element: HTMLElement) {
     } if (atom instanceof Layout) {
         element.classList.add('layout')
     } if (atom instanceof TextInput) {
-        
+
     }
 }

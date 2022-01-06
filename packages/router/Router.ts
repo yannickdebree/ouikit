@@ -2,11 +2,14 @@ import { Atom } from "@ouikit/core";
 import { RouterController } from "./RouterController";
 
 export class Router extends Atom {
-    private activeRoute: string;
+    private activeRoute?: string;
 
     constructor(private config: { routes: { [route: string]: RouterController } }) {
         super();
-        this.activeRoute = Object.keys(this.config.routes)[0];
+        const defaultRoute = Object.keys(this.config.routes)[0];
+        if (defaultRoute !== undefined && defaultRoute !== null) {
+            this.activeRoute = defaultRoute;
+        }
     }
 
     getActiveRoute() {
@@ -21,7 +24,7 @@ export class Router extends Atom {
         return this;
     }
 
-    getActiveRouteController() {
-        return this.config.routes[this.activeRoute];
+    getActiveRouterController() {
+        return this.activeRoute !== undefined && this.activeRoute !== null ? this.config.routes[this.activeRoute] : undefined;
     }
 }

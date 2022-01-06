@@ -1,4 +1,4 @@
-import { Atom, Box, Button, Container, Divider, TextInput, Layout, List, ListItem } from "@ouikit/core";
+import { Atom, Box, Button, Container, Divider, Layout, List, ListItem, Text, TextInput } from "@ouikit/core";
 import { Router } from "@ouikit/router";
 
 const atomTagsDictionnary = {
@@ -9,8 +9,8 @@ const atomTagsDictionnary = {
     [Router.name]: "div",
     [Box.name]: "div",
     [Container.name]: "div",
-    [Divider.name]: "hr",
     [Layout.name]: "div",
+    [Divider.name]: "hr",
     [TextInput.name]: "input"
 }
 

@@ -1,6 +1,5 @@
 import { Atom, Title } from "@ouikit/core";
 import { getTagFromAtom } from "./tags";
-import { onUpdate } from "./update";
 
 export function createElement(atom: Atom) {
     let tag: string;
@@ -36,8 +35,6 @@ export function createElement(atom: Atom) {
     }
 
     const element = document.createElement(tag);
-
-    onUpdate(atom, element);
 
     return element;
 }
