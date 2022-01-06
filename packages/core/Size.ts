@@ -1,0 +1,1 @@
+export type Size = 'xs' | 's' | 'sm' | 'm' | 'l' | 'xl';
