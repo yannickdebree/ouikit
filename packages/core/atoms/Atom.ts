@@ -22,10 +22,12 @@ export class Atom {
         this.changeDetections.forEach(onChange => {
             onChange();
         })
+        return this;
     }
 
     onChangesDetected(callback: () => void) {
         this.changeDetections.push(callback);
+        return this;
     }
 
     getEventsListeners() {

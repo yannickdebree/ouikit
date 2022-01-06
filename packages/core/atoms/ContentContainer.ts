@@ -16,5 +16,6 @@ export class ContentContainer extends Atom {
     setContent(...content: Content) {
         this.content = content;
         this.detectChanges();
+        return this;
     }
 }

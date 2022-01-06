@@ -1,3 +1,3 @@
-import { ContentContainer } from "..";
+import { ContentContainer } from "./ContentContainer";
 
 export class Container extends ContentContainer {}
