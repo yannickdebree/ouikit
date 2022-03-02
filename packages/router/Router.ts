@@ -1,15 +1,16 @@
-import { Atom } from "@ouikit/core";
+import { Atom, registerInjectable } from "@ouikit/core";
 import { RouterController } from "./RouterController";
 
 export class Router extends Atom {
     private activeRoute?: string;
 
-    constructor(private config: { routes: { [route: string]: RouterController } }) {
+    constructor(public readonly config: { routes: { [route: string]: RouterController }, useHash?: boolean }) {
         super();
         const defaultRoute = Object.keys(this.config.routes)[0];
         if (defaultRoute !== undefined && defaultRoute !== null) {
             this.activeRoute = defaultRoute;
         }
+        registerInjectable('ROUTER', { useValue: this });
     }
 
     getActiveRoute() {

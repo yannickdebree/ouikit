@@ -1,0 +1,1 @@
+export type InjectableToken<T> = new (...args: any[]) => T | string | T;

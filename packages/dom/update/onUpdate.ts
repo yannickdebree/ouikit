@@ -1,6 +1,6 @@
 import { Atom, Box, Container, ContentContainer, Layout, List, TextInput } from "@ouikit/core";
-import { Router, RouterControllerTools } from "@ouikit/router";
-import { render } from ".";
+import { Router } from "@ouikit/router";
+import { render } from "..";
 
 export function onUpdate(atom: Atom, element: HTMLElement) {
     if (atom instanceof ContentContainer) {
@@ -20,18 +20,7 @@ export function onUpdate(atom: Atom, element: HTMLElement) {
         element.innerHTML = "";
         render(element, ...atom.getItems());
     } if (atom instanceof Router) {
-        element.innerHTML = "";
-        const options: RouterControllerTools = {
-            mount(...atoms) {
-                render(element, ...atoms);
-            }
-        };
-
-        const activeRouterController = atom.getActiveRouterController()
-
-        if (!!activeRouterController) {
-            activeRouterController(options);
-        }
+        // onUpdateRouter(atom, element);
     } if (atom instanceof Box) {
         element.classList.add('box')
     } if (atom instanceof Container) {
@@ -39,6 +28,9 @@ export function onUpdate(atom: Atom, element: HTMLElement) {
     } if (atom instanceof Layout) {
         element.classList.add('layout')
     } if (atom instanceof TextInput) {
-
+        if (!!atom.getValue()) {
+            atom.setValue((element as HTMLInputElement).value)
+        }
+        (element as HTMLInputElement).value = atom.getValue() || '';
     }
 }

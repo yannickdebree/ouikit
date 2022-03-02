@@ -1,40 +1,51 @@
-import { Button, Layout, List, ListItem, ref, TextInput } from "@ouikit/core";
-import { RouterControllerTools } from "@ouikit/router";
+import { Button, Layout, List, ListItem, Molecule, ref, Text, TextInput } from "@ouikit/core";
 
 type Task = { id: number, content: string };
 
-export function Todolist({ mount }: RouterControllerTools) {
-    const list = new List();
+export class Todolist implements Molecule {
+    render() {
+        const list = new List().if(() => getTasks().length > 0).else(new Text('No tasks for the moment.'));
 
-    const [getState, setState] = ref({
-        tasks: new Array<Task>(),
-    }, {
-        onChange({ tasks }) {
+        setTimeout(() => {
+            setTasks(tasks => tasks.concat([{ id: tasks.length, content: "Test" }]))
+        }, 2000)
+
+        const [getTasks, setTasks] = ref(new Array<Task>(), {
+            onChange(tasks) {
             list.setItems(tasks.map((task) => {
                 const item = new ListItem(task.content);
-                item.on('click', () => setState({ tasks: tasks.filter(t => t.id !== task.id) }))
+                item.on('click', () => setTasks(tasks.filter(t => t.id !== task.id)))
                 return item;
-            }))
+            }));
         }
     });
 
-    const createTask = () => {
-        const id = getState().tasks.length;
-        setState({ tasks: getState().tasks.concat([{ id, content: "Nouvelle tâche " + id }]) });
+
+        const createTask = (content: string) => {
+            setTasks(tasks => tasks.concat([{ id: tasks.length, content }]));
     }
 
-    const button = new Button('Create a new task').on('click', createTask);
-
     const input = new TextInput().on('keypress', (event) => {
-        if (event?.code === "Enter") {
-            createTask();
+        const value = input.getValue();
+        console.log(value);
+
+        if (event?.code === "Enter" && !!value) {
+            createTask(value);
             input.setValue('');
         }
-
     });
+
+        const button = new Button('Create a new task').on('click', () => {
+            const value = input.getValue();
+            if (!!value) {
+                createTask(value);
+            }
+    });
+
     const header = new Layout(
         input, button
-    )
+    );
 
-    mount(header, list)
+        return [header, list]
+    }
 }

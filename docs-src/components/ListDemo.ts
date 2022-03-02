@@ -1,7 +1,6 @@
 import { List, ListItem } from "@ouikit/core";
-import { RouterControllerTools } from "@ouikit/router";
 
-export function ListDemo({ mount }: RouterControllerTools) {
+export function ListDemo() {
     const list = new List();
 
     const itemA = new ListItem("I am an item of the list");
@@ -10,5 +9,5 @@ export function ListDemo({ mount }: RouterControllerTools) {
     const itemB = new ListItem("I am a second item of the list");
     list.addItem(itemB);
 
-    mount(list);
+    return [list]
 }

@@ -1,5 +1,5 @@
-import { Atom } from './Atom';
 import { Content } from '../Content';
+import { Atom } from './Atom';
 
 export class ContentContainer extends Atom {
     private content: Content;
