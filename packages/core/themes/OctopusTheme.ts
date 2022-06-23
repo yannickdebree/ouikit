@@ -1,4 +1,4 @@
-import { Theme } from "./Theme";
+import { Theme } from "../exported-interfaces";
 
 export class OctopusTheme implements Theme {
     readonly name = 'Octopus';

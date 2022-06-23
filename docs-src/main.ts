@@ -6,7 +6,7 @@ const container = new Container(
     new Title("Ouikit - Documentation"),
     new Divider(),
     new ComponentsSection(),
-    new Divider(),
+    // new Divider(),
     // new ExamplesSection()
 );
 

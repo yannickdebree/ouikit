@@ -1,5 +1,5 @@
 import { Theme } from "@ouikit/core";
-import { MissingStyleSheetError } from "../errors";
+import { MissingStyleSheetError } from "./errors";
 
 export let currentTheme: Theme;
 

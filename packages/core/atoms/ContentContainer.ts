@@ -1,4 +1,4 @@
-import { Content } from '../Content';
+import { Content } from '../exported-interfaces';
 import { Atom } from './Atom';
 
 export class ContentContainer extends Atom {

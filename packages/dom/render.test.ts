@@ -3,8 +3,10 @@ import { MissingRootElementError } from "./errors";
 import { render } from "./render";
 
 describe(render.name, () => {
+    const root = document.body;
+
     afterEach(() => {
-        document.body.innerHTML = '';
+        root.innerHTML = '';
     })
 
     it('Missing root element throws an error', () => {
@@ -21,20 +23,20 @@ describe(render.name, () => {
     });
 
     it('Should do nothing for null content', () => {
-        render(document.body, undefined);
-        expect(document.body.innerHTML).toBe('')
-        render(document.body, null);
-        expect(document.body.innerHTML).toBe('')
+        render(root, undefined);
+        expect(root.innerHTML).toBe('')
+        render(root, null);
+        expect(root.innerHTML).toBe('')
     });
 
     it('Should write text content in root element', () => {
-        render(document.body, 'Hello world');
-        expect(document.body.textContent).toBe('Hello world')
+        render(root, 'Hello world');
+        expect(root.textContent).toBe('Hello world')
     });
 
     it('Should render atom in root element', () => {
-        render(document.body, new Title('Hello world'));
-        expect(document.body.innerHTML).toBe('<h1>Hello world</h1>')
+        render(root, new Title('Hello world'));
+        expect(root.innerHTML).toBe('<h1>Hello world</h1>')
     });
 
     it('Should render molecule in root element', () => {
@@ -46,7 +48,7 @@ describe(render.name, () => {
             }
         }
 
-        render(document.body, new MyMolecule());
-        expect(document.body.innerHTML).toBe('<h1>Hello world</h1>')
+        render(root, new MyMolecule());
+        expect(root.innerHTML).toBe('<h1>Hello world</h1>')
     });
 })

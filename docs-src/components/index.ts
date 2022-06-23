@@ -11,13 +11,16 @@ class ComponentsSection implements Molecule {
     render() {
         return [
             new Title("Components").setSize('l'),
+            // Text input
             new BoxDemo(),
-            new TitleDemo(),
-            new TextDemo(),
-            new ContainerDemo(),
-            new DividerDemo(),
             new ButtonDemo(),
-            new ListDemo()
+            new ContainerDemo(),
+            // Content container
+            new DividerDemo(),
+            // Layout
+            new ListDemo(),
+            new TextDemo(),
+            new TitleDemo(),
         ]
     }
 }

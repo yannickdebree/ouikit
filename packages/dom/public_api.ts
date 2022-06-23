@@ -1,3 +1,3 @@
-export * from './render';
-export * from './setTitle';
-export * from './theme';
+export { render } from './render';
+export { useTheme } from './useTheme';
+
