@@ -1,5 +1,6 @@
-import { Content } from "@ouikit/core";
+import { Atom, Content, ContentContainer } from "@ouikit/core";
 import { OctopusTheme } from "@ouikit/core/themes";
+import { createElement } from "./createElement";
 import { MissingRootElementError } from "./errors";
 import { currentTheme, useTheme } from "./theme/useTheme";
 
@@ -23,56 +24,23 @@ export function render(root: Element | null | undefined, ...content: Content) {
             root.appendChild(new Text(contentElement));
             return;
         }
-    })
 
+        if (contentElement instanceof Atom) {
+            const nodeElement = createElement(contentElement);
 
-    // content.forEach(contentElement => {
+            if (contentElement instanceof ContentContainer) {
+                contentElement.getContent().forEach(content => {
+                    if (typeof content === "string") {
+                        nodeElement.appendChild(new Text(content))
+                    }
+                });
+            }
 
-    //     if (typeof contentElement === "string") {
-    //         root.appendChild(new Text(contentElement));
-    //         return;
-    //     }
+            root.appendChild(nodeElement);
+            return;
+        }
 
-    //     if (!(contentElement instanceof Atom)) {
-    //         render(root, ...contentElement.render());
-    //         return;
-    //     }
-
-    //     const conditionFactory = contentElement.getConditionFactory();
-
-    //     if (!!conditionFactory && !conditionFactory()) {
-    //         const elseAtoms = contentElement.getElseAtoms();
-    //         if (!elseAtoms) {
-    //             throw new Error();
-    //         }
-    //         render(root, ...elseAtoms);
-    //         return;
-    //     }
-
-    //     const nodeElement = createElement(contentElement);
-
-    //     if (nodeElement instanceof TextInput) {
-    //         nodeElement.on('keypress', (event) => {
-    //             console.log((event?.target as HTMLInputElement).value);
-
-    //             nodeElement.setValue((event?.target as HTMLInputElement).value);
-    //             console.log(nodeElement);
-    //         });
-    //     }
-    //     onUpdate(contentElement, nodeElement);
-
-    //     root.appendChild(nodeElement);
-
-    //     const eventsListeners = contentElement.getEventsListeners();
-
-    //     Object.keys(eventsListeners).forEach(event => {
-    //         eventsListeners[event].forEach(eventListenerCallback => {
-    //             nodeElement.addEventListener(event, eventListenerCallback);
-    //         })
-    //     });
-
-    //     contentElement.onChangesDetected(() => {
-    //         onUpdate(contentElement, nodeElement);
-    //     })
-    // });
+        const modeculeContent = contentElement.render();
+        render(root, ...modeculeContent);
+    });
 }
