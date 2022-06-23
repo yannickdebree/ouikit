@@ -4,6 +4,5 @@ module.exports = {
   testEnvironment: "jsdom",
   moduleNameMapper: {
     "@ouikit/core": "<rootDir>/packages/core",
-    "@ouikit/router": "<rootDir>/packages/router",
   },
 };

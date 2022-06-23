@@ -1,22 +1,19 @@
-import { Atom, Content, TextInput } from "@ouikit/core";
+import { Content } from "@ouikit/core";
 import { OctopusTheme } from "@ouikit/core/themes";
-import { createElement } from "./createElement";
-import { onUpdate } from "./update";
-import { currentTheme, useTheme } from "./useTheme";
+import { MissingRootElementError } from "./errors";
+import { currentTheme, useTheme } from "./theme/useTheme";
 
-export let firstRendering = true;
+let firstRendering = true;
 
-export function render(root: Element | null, ...content: Content) {
+export function render(root: Element | null | undefined, ...content: Content) {
+    if (!root) {
+        throw new MissingRootElementError()
+    }
+
     if (firstRendering) {
         firstRendering = false;
 
-        if (!currentTheme) {
-            useTheme(new OctopusTheme());
-        }
-    }
-
-    if (!root) {
-        throw new Error('Root element is undefined');
+        useTheme(!!currentTheme ? currentTheme : new OctopusTheme());
     }
 
     content.forEach(contentElement => {
@@ -26,47 +23,56 @@ export function render(root: Element | null, ...content: Content) {
             root.appendChild(new Text(contentElement));
             return;
         }
+    })
 
-        if (!(contentElement instanceof Atom)) {
-            render(root, ...contentElement.render());
-            return;
-        }
 
-        const conditionFactory = contentElement.getConditionFactory();
+    // content.forEach(contentElement => {
 
-        if (!!conditionFactory && !conditionFactory()) {
-            const elseAtoms = contentElement.getElseAtoms();
-            if (!elseAtoms) {
-                throw new Error();
-            }
-            render(root, ...elseAtoms);
-            return;
-        }
+    //     if (typeof contentElement === "string") {
+    //         root.appendChild(new Text(contentElement));
+    //         return;
+    //     }
 
-        const nodeElement = createElement(contentElement);
+    //     if (!(contentElement instanceof Atom)) {
+    //         render(root, ...contentElement.render());
+    //         return;
+    //     }
 
-        if (nodeElement instanceof TextInput) {
-            nodeElement.on('keypress', (event) => {
-                console.log((event?.target as HTMLInputElement).value);
+    //     const conditionFactory = contentElement.getConditionFactory();
 
-                nodeElement.setValue((event?.target as HTMLInputElement).value);
-                console.log(nodeElement);
-            });
-        }
-        onUpdate(contentElement, nodeElement);
+    //     if (!!conditionFactory && !conditionFactory()) {
+    //         const elseAtoms = contentElement.getElseAtoms();
+    //         if (!elseAtoms) {
+    //             throw new Error();
+    //         }
+    //         render(root, ...elseAtoms);
+    //         return;
+    //     }
 
-        root.appendChild(nodeElement);
+    //     const nodeElement = createElement(contentElement);
 
-        const eventsListeners = contentElement.getEventsListeners();
+    //     if (nodeElement instanceof TextInput) {
+    //         nodeElement.on('keypress', (event) => {
+    //             console.log((event?.target as HTMLInputElement).value);
 
-        Object.keys(eventsListeners).forEach(event => {
-            eventsListeners[event].forEach(eventListenerCallback => {
-                nodeElement.addEventListener(event, eventListenerCallback);
-            })
-        });
+    //             nodeElement.setValue((event?.target as HTMLInputElement).value);
+    //             console.log(nodeElement);
+    //         });
+    //     }
+    //     onUpdate(contentElement, nodeElement);
 
-        contentElement.onChangesDetected(() => {
-            onUpdate(contentElement, nodeElement);
-        })
-    });
+    //     root.appendChild(nodeElement);
+
+    //     const eventsListeners = contentElement.getEventsListeners();
+
+    //     Object.keys(eventsListeners).forEach(event => {
+    //         eventsListeners[event].forEach(eventListenerCallback => {
+    //             nodeElement.addEventListener(event, eventListenerCallback);
+    //         })
+    //     });
+
+    //     contentElement.onChangesDetected(() => {
+    //         onUpdate(contentElement, nodeElement);
+    //     })
+    // });
 }

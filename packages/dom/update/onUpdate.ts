@@ -1,5 +1,4 @@
-import { Atom, Box, Container, ContentContainer, Layout, List, TextInput, Molecule } from "@ouikit/core";
-import { Router } from "@ouikit/router";
+import { Atom, Box, Container, ContentContainer, Layout, List, TextInput } from "@ouikit/core";
 import { render } from "..";
 
 export function onUpdate(atom: Atom, element: HTMLElement) {
@@ -22,8 +21,6 @@ export function onUpdate(atom: Atom, element: HTMLElement) {
         // TODO: upgrade children delete
         element.innerHTML = "";
         render(element, ...atom.getItems());
-    } if (atom instanceof Router) {
-        // onUpdateRouter(atom, element);
     } if (atom instanceof Box) {
         element.classList.add('box')
     } if (atom instanceof Container) {

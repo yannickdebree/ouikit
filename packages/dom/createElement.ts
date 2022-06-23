@@ -1,4 +1,5 @@
 import { Atom, Title } from "@ouikit/core";
+import { UnknowTagError } from "./errors";
 import { getTagFromAtom } from "./tags";
 
 export function createElement(atom: Atom) {
@@ -31,7 +32,7 @@ export function createElement(atom: Atom) {
     }
 
     if (!tag) {
-        throw new Error('Element not defined')
+        throw new UnknowTagError();
     }
 
     const element = document.createElement(tag);

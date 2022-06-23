@@ -1,6 +1,7 @@
-import { Theme } from "../core/themes/Theme";
+import { Theme } from "@ouikit/core";
+import { MissingStyleSheetError } from "../errors";
 
-export let currentTheme: string;
+export let currentTheme: Theme;
 
 export function useTheme(theme: Theme) {
     const styleElement = document.createElement('style');
@@ -11,8 +12,10 @@ export function useTheme(theme: Theme) {
     const styleSheet = styleElement.sheet;
 
     if (!styleSheet) {
-        throw new Error();
+        throw new MissingStyleSheetError();
     }
+
+    currentTheme = theme;
 
     styleSheet.insertRule(`
 body{
@@ -42,7 +45,7 @@ h1, h2, h3, h4, h5, h6, p, hr {
 }
 `);
 
-styleSheet.insertRule(`
+    styleSheet.insertRule(`
 .layout {
     display: flex;
     flex-direction: row;
@@ -50,7 +53,7 @@ styleSheet.insertRule(`
 }
 `);
 
-styleSheet.insertRule(`
+    styleSheet.insertRule(`
 .container {
 margin: auto;
 padding: 0 1rem;
@@ -101,6 +104,4 @@ button {
     }
 }
 `);
-
-    currentTheme = theme.name;
 }

@@ -1,5 +1,4 @@
 import { Box, Button, Container, Divider, Layout, List, ListItem, Text, TextInput, Title } from '@ouikit/core';
-import { Router } from '@ouikit/router';
 import { createElement } from './createElement';
 
 describe(createElement.name, () => {
@@ -67,12 +66,6 @@ describe(createElement.name, () => {
         const listItem = new ListItem();
         const element = createElement(listItem);
         expect(element.tagName).toEqual('LI');
-    })
-
-    it('Must match with router', () => {
-        const router = new Router({ routes: {} });
-        const element = createElement(router);
-        expect(element.tagName).toEqual('DIV');
     })
 
     it('Must match with box', () => {
