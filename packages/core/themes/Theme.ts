@@ -1,10 +1,10 @@
 import { Color } from "../Color";
 
 export interface Theme {
-    name: string;
-    version: string;
-    fontFamily: string;
-    primaryColor: Color;
-    lightTextColor: Color;
-    darkTextColor: Color,
+    readonly name: string;
+    readonly version: string;
+    readonly fontFamily: string;
+    readonly primaryColor: Color;
+    readonly lightTextColor: Color;
+    readonly darkTextColor: Color,
 }

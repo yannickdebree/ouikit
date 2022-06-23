@@ -1,1 +1,1 @@
-export * from './octopus'
+export * from './OctopusTheme'

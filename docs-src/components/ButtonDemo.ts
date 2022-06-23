@@ -1,5 +1,9 @@
-import { Button } from "@ouikit/core";
+import { Button, Molecule } from "@ouikit/core";
 
-export const ButtonDemo = [
-    new Button("I am a button"),
-]
+export class ButtonDemo implements Molecule {
+    render() {
+        return [
+            new Button("I am a button"),
+        ]
+    }
+}

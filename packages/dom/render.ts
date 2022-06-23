@@ -1,17 +1,17 @@
-import { Atom, TextInput } from "@ouikit/core";
-import { Octopus } from "@ouikit/core/themes";
+import { Atom, Content, TextInput } from "@ouikit/core";
+import { OctopusTheme } from "@ouikit/core/themes";
 import { createElement } from "./createElement";
 import { onUpdate } from "./update";
 import { currentTheme, useTheme } from "./useTheme";
 
 export let firstRendering = true;
 
-export function render(root: Element | null, ...atoms: Array<Atom>) {
+export function render(root: Element | null, ...content: Content) {
     if (firstRendering) {
         firstRendering = false;
 
         if (!currentTheme) {
-            useTheme(Octopus);
+            useTheme(new OctopusTheme());
         }
     }
 
@@ -19,11 +19,23 @@ export function render(root: Element | null, ...atoms: Array<Atom>) {
         throw new Error('Root element is undefined');
     }
 
-    atoms.forEach(atom => {
-        const conditionFactory = atom.getConditionFactory();
+    content.forEach(contentElement => {
+        if (contentElement === null || contentElement === undefined) return;
+
+        if (typeof contentElement === "string") {
+            root.appendChild(new Text(contentElement));
+            return;
+        }
+
+        if (!(contentElement instanceof Atom)) {
+            render(root, ...contentElement.render());
+            return;
+        }
+
+        const conditionFactory = contentElement.getConditionFactory();
 
         if (!!conditionFactory && !conditionFactory()) {
-            const elseAtoms = atom.getElseAtoms();
+            const elseAtoms = contentElement.getElseAtoms();
             if (!elseAtoms) {
                 throw new Error();
             }
@@ -31,30 +43,30 @@ export function render(root: Element | null, ...atoms: Array<Atom>) {
             return;
         }
 
-        const element = createElement(atom);
+        const nodeElement = createElement(contentElement);
 
-        if (atom instanceof TextInput) {
-            atom.on('keypress', (event) => {
+        if (nodeElement instanceof TextInput) {
+            nodeElement.on('keypress', (event) => {
                 console.log((event?.target as HTMLInputElement).value);
 
-                atom.setValue((event?.target as HTMLInputElement).value);
-                console.log(atom);
+                nodeElement.setValue((event?.target as HTMLInputElement).value);
+                console.log(nodeElement);
             });
         }
-        onUpdate(atom, element);
+        onUpdate(contentElement, nodeElement);
 
-        root.appendChild(element);
+        root.appendChild(nodeElement);
 
-        const eventsListeners = atom.getEventsListeners();
+        const eventsListeners = contentElement.getEventsListeners();
 
         Object.keys(eventsListeners).forEach(event => {
             eventsListeners[event].forEach(eventListenerCallback => {
-                element.addEventListener(event, eventListenerCallback);
+                nodeElement.addEventListener(event, eventListenerCallback);
             })
         });
 
-        atom.onChangesDetected(() => {
-            onUpdate(atom, element);
+        contentElement.onChangesDetected(() => {
+            onUpdate(contentElement, nodeElement);
         })
     });
 }

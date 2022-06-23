@@ -1,14 +1,14 @@
 import { Container, Divider, Title } from "@ouikit/core";
 import { render } from "@ouikit/dom";
-import { Components } from "./components";
-import { Examples } from "./examples";
+import ComponentsSection from "./components";
+import ExamplesSection from "./examples";
 
 const container = new Container(
     new Title("Ouikit - Documentation"),
     new Divider(),
-    ...Components,
+    new ComponentsSection(),
     new Divider(),
-    new Examples()
-)
+    new ExamplesSection()
+);
 
 render(document.querySelector('#root'), container);

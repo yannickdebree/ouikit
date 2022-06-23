@@ -1,13 +1,18 @@
-import { List, ListItem } from "@ouikit/core";
+import { List, ListItem, Molecule, Title } from "@ouikit/core";
 
-export function ListDemo() {
-    const list = new List();
+export class ListDemo implements Molecule {
+    render() {
+        const list = new List();
 
-    const itemA = new ListItem("I am an item of the list");
-    list.addItem(itemA);
+        const itemA = new ListItem("I am an item of the list");
+        list.addItem(itemA);
 
-    const itemB = new ListItem("I am a second item of the list");
-    list.addItem(itemB);
+        const itemB = new ListItem("I am a second item of the list");
+        list.addItem(itemB);
 
-    return [list]
+        return [
+            new Title('List').setSize('m'),
+            list
+        ];
+    }
 }

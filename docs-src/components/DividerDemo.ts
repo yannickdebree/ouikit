@@ -1,5 +1,10 @@
-import { Divider } from "@ouikit/core";
+import { Divider, Molecule, Title } from "@ouikit/core";
 
-export const DividerDemo = [
-    new Divider()
-]
+export class DividerDemo implements Molecule {
+    render() {
+        return [
+            new Title('Divider').setSize('m'),
+            new Divider()
+        ]
+    }
+}

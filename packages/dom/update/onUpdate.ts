@@ -1,4 +1,4 @@
-import { Atom, Box, Container, ContentContainer, Layout, List, TextInput } from "@ouikit/core";
+import { Atom, Box, Container, ContentContainer, Layout, List, TextInput, Molecule } from "@ouikit/core";
 import { Router } from "@ouikit/router";
 import { render } from "..";
 
@@ -10,8 +10,11 @@ export function onUpdate(atom: Atom, element: HTMLElement) {
             if (content === null || content === undefined) return;
             if (content instanceof Atom) {
                 render(element, content);
-            } else {
+            } else if (typeof content === "string") {
                 element.appendChild(new Text(content))
+            } else {
+                const contentRendered = content.render();
+                render(element, ...contentRendered);
             }
         });
     }
