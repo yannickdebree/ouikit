@@ -1,8 +1,13 @@
-import { Atom } from "./Atom";
+import { ContentContainer } from "./ContentContainer";
 import { ListItem } from "./ListItem";
 
-export class List extends Atom {
+export class List extends ContentContainer {
     private items = new Array<ListItem>();
+
+    constructor(...items: Array<ListItem>) {
+        super(...items);
+        this.items = items;
+    }
 
     getItems() {
         return this.items;

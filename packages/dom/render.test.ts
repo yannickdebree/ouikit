@@ -1,5 +1,5 @@
 import { Molecule, Title } from "@ouikit/core";
-import { MissingRootElementError } from "./errors";
+import { MissingRootElementError, UnknowContentElementTypeError } from "./errors";
 import { render } from "./render";
 
 describe(render.name, () => {
@@ -50,5 +50,15 @@ describe(render.name, () => {
 
         render(root, new MyMolecule());
         expect(root.innerHTML).toBe('<h1>Hello world</h1>')
+    });
+
+    it('Should throw error for other content type in root element', () => {
+        class MyMolecule { }
+
+        try {
+            render(root, new MyMolecule() as Molecule);
+        } catch (err) {
+            expect(err).toBeInstanceOf(UnknowContentElementTypeError);
+        }
     });
 })

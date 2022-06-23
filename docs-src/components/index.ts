@@ -3,21 +3,22 @@ import { BoxDemo } from "./BoxDemo";
 import { ButtonDemo } from "./ButtonDemo";
 import { ContainerDemo } from "./ContainerDemo";
 import { DividerDemo } from "./DividerDemo";
+import { LayoutDemo } from "./LayoutDemo";
 import { ListDemo } from "./ListDemo";
 import { TextDemo } from "./TextDemo";
+import { TextInputDemo } from "./TextInputDemo";
 import { TitleDemo } from "./TitleDemo";
 
 class ComponentsSection implements Molecule {
     render() {
         return [
             new Title("Components").setSize('l'),
-            // Text input
+            new TextInputDemo(),
             new BoxDemo(),
             new ButtonDemo(),
             new ContainerDemo(),
-            // Content container
             new DividerDemo(),
-            // Layout
+            new LayoutDemo(),
             new ListDemo(),
             new TextDemo(),
             new TitleDemo(),

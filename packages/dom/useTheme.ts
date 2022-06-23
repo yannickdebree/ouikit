@@ -7,8 +7,6 @@ export function useTheme(theme: Theme) {
     const styleElement = document.createElement('style');
     document.head.appendChild(styleElement);
 
-    const { fontFamily, primaryColor, lightTextColor, darkTextColor } = theme;
-
     const styleSheet = styleElement.sheet;
 
     if (!styleSheet) {
@@ -16,6 +14,8 @@ export function useTheme(theme: Theme) {
     }
 
     currentTheme = theme;
+
+    const { fontFamily, primaryColor, lightTextColor, darkTextColor } = currentTheme;
 
     styleSheet.insertRule(`
 body{
@@ -48,16 +48,14 @@ h1, h2, h3, h4, h5, h6, p, hr {
     styleSheet.insertRule(`
 .layout {
     display: flex;
-    flex-direction: row;
-    align-items: center;
 }
 `);
 
     styleSheet.insertRule(`
 .container {
-margin: auto;
-padding: 0 1rem;
-box-sizing: border-box;
+    margin: auto;
+    padding: 0 1rem;
+    box-sizing: border-box;
 }
 `);
 
