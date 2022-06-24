@@ -1,5 +1,5 @@
 import { Molecule, Title } from "@ouikit/core";
-import { MissingRootElementError, UnknowContentElementTypeError } from "./errors";
+import { MissingRootElementError, UnknowContentElementTypeError } from "../errors";
 import { render } from "./render";
 
 describe(render.name, () => {

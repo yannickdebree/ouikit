@@ -1,8 +1,8 @@
 import { Content } from "@ouikit/core";
 import { OctopusTheme } from "@ouikit/core/themes";
-import { MissingRootElementError } from "./errors";
-import { injectContentInRootElement } from "./injectContentInRootElement";
-import { currentTheme, useTheme } from "./useTheme";
+import { MissingRootElementError } from "../errors";
+import { currentTheme, useTheme } from "../useTheme";
+import { renderContentInRoot } from "./renderContentInRoot";
 
 let firstRendering = true;
 
@@ -17,7 +17,8 @@ export function render(root: Element | null | undefined, ...content: Content) {
         useTheme(!!currentTheme ? currentTheme : new OctopusTheme());
     }
 
-    content.forEach(contentElement => {
-        injectContentInRootElement(root, contentElement);
+
+    content.forEach((contentElement, position) => {
+        renderContentInRoot(root, contentElement, position);
     });
 }

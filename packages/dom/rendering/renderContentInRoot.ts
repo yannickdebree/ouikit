@@ -1,13 +1,17 @@
 import { Atom, ContentElement } from "@ouikit/core";
-import { UnknowContentElementTypeError } from "./errors";
+import { UnknowContentElementTypeError } from "../errors";
 import { render } from "./render";
 import { renderAtom } from "./renderAtom";
 
-export function injectContentInRootElement(root: Element, contentElement: ContentElement) {
+export function renderContentInRoot(root: Element, contentElement: ContentElement, position: number) {
     if (contentElement === null || contentElement === undefined) return;
 
     if (typeof contentElement === "string") {
-        root.appendChild(new Text(contentElement));
+        if (!root.childNodes[position] || !(root.childNodes[position] instanceof Text)) {
+            root.appendChild(new Text(contentElement));
+        }
+
+        root.childNodes[position].textContent = contentElement;
         return;
     }
 

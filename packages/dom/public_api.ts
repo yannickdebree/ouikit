@@ -1,3 +1,3 @@
-export { render } from './render';
+export { render } from './rendering';
 export { useTheme } from './useTheme';
 

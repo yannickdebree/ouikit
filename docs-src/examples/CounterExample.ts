@@ -1,6 +1,6 @@
-import { Button, Molecule, ref } from "@ouikit/core";
+import { Button, Molecule, ref, Title } from "@ouikit/core";
 
-export class Counter implements Molecule {
+export class CounterExample implements Molecule {
     render() {
         const button = new Button();
 
@@ -15,6 +15,9 @@ export class Counter implements Molecule {
             setCounter(counter => counter + 1);
         });
 
-        return [button];
+        return [
+            new Title('Counter').setSize('m'),
+            button
+        ];
     }
 }

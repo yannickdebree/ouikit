@@ -29,4 +29,12 @@ describe(ref.name, () => {
             }
         });
     });
+
+
+    it('Should provide next value factory', () => {
+        const [getState, setState] = ref(0);
+        setState(count => count + 1);
+        expect(getState()).toEqual(1);
+    });
+
 })

@@ -1,5 +1,5 @@
 import { Atom } from "@ouikit/core";
-import { UnknowTagError } from "./errors";
+import { UnknowTagError } from "../errors";
 import { getTagFromAtom } from "./tags";
 
 export function createElement(atom: Atom) {
