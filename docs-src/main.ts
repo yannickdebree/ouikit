@@ -11,4 +11,4 @@ const container = new Container(
     new ExamplesSection()
 );
 
-render(document.querySelector('#root'), container);
+render(document.querySelector('#root'), "Hello");
